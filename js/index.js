@@ -10,28 +10,51 @@ const $ADD = document.getElementById('$add');
 
 const $INPUTS = [$DESCRIPTION, $CALORIES, $CARBS, $PROTEIN];
 
-//const $DESCRIPTION = description.value
+let list = [
+]
 
-(function keydownEvent(){
-    $INPUTS.forEach((input) => {
-        input.addEventListener('change', () => {
-            input.classList.remove('is-invalid')})
-    });
-})();
+//const $DESCRIPTION = description.value
 
 const isEmpty = input => input.value;
 
 const inputsAreEmpty = () => isEmpty($DESCRIPTION) && isEmpty($CALORIES) && isEmpty($CARBS) && isEmpty($PROTEIN);
 
+const keyDownInput = () => {
+    $INPUTS.forEach((input) => {
+        input.addEventListener('change', () => {
+            input.classList.remove('is-invalid')})
+    });
+}
+
+const addToList = () => {
+    const newItem = {
+        description: $DESCRIPTION.value,
+        calories: +$CALORIES.value,
+        carbs: +$CARBS.value,
+        protein: +$PROTEIN.value
+    }
+    list.push(newItem);
+    console.log(list);
+}
+
+const cleanInputs = () => {
+    $INPUTS.forEach((input) => {
+        input.value = '';
+    })
+}
+
 const validateInputs = () => {
     $INPUTS.forEach((input) => {
-        input.value ? '' : input.classList.add('is-invalid');
-        if (inputsAreEmpty()){
-            console.log('Inputs are ok!');
-        } else {
-                console.log('Inputs are empty!');
-            }
-    });
-    
+        input.value ? '' : input.classList.add('is-invalid');        
+    });    
+
+    if (inputsAreEmpty()){
+        addToList();
+        cleanInputs();
+    } else {
+            console.log('Inputs are empty!');
+    }
 }
+
+keyDownInput();
 
